@@ -37,7 +37,6 @@ Fish::Fish(QPoint beginLimit, QPoint endLimit, QObject* parent)
     beginLimit_(beginLimit),
     endLimit_(endLimit)
 {
-  std::string ts("1970-01-01 01:00:00.000");
   boost::posix_time::ptime myEpoch(boost::gregorian::date(1970,1,1));
   boost::posix_time::ptime microTime
       = boost::posix_time::microsec_clock::local_time();

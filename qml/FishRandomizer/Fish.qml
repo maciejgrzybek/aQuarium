@@ -6,10 +6,12 @@ Item {
     height: 100
     property int identifier: 0
     Image {
+        id: fishImage
         source: "fish.svg"
         fillMode: Image.PreserveAspectFit
         width: fish.width
         height: fish.height
+        mirror: false
         scale: 1
         MouseArea {
             acceptedButtons: Qt.RightButton
@@ -19,6 +21,7 @@ Item {
 
         Component.onCompleted: {
             identifier = fishManager.registerFish(aquarium.width*scale-fish.width,aquarium.height*scale-fish.height);
+            movementTimer.triggeredOnStart = true
             console.log("Fish completed. Id = " + identifier)
         }
     }
@@ -31,6 +34,10 @@ Item {
 
         onTriggered: {
             var point = fishManager.getNewDestination(fish.identifier);
+            if (point.x > x)
+                fishImage.mirror = true
+            else
+                fishImage.mirror = false
             x = point.x
             y = point.y
             console.log("got: x=" + point.x +" y=" + point.y)
