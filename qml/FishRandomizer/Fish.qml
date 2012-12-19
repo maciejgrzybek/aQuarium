@@ -21,23 +21,27 @@ Item {
             identifier = fishManager.registerFish(aquarium.width*scale-fish.width,aquarium.height*scale-fish.height);
             console.log("Fish completed. Id = " + identifier)
         }
+    }
 
-        Timer {
-            id: movementTimer
-            interval: 1000
-            repeat: true
-            running: true
+    Timer {
+        id: movementTimer
+        interval: 5000
+        repeat: true
+        running: true
 
-            onTriggered: {
-                var point = fishManager.getNewDestination(fish.identifier);
-                fish.x = point.x
-                fish.y = point.y
-                console.log("got: x=" + point.x +" y=" + point.y)
-            }
+        onTriggered: {
+            var point = fishManager.getNewDestination(fish.identifier);
+            x = point.x
+            y = point.y
+            console.log("got: x=" + point.x +" y=" + point.y)
         }
+    }
 
-        /*transitions: Transition {
-            NumberAnimation { properties: "x,y"; easing.type: Easing.InOutQuad }
-        }*/
+    Behavior on x {
+        NumberAnimation { duration: movementTimer.interval }
+    }
+
+    Behavior on y {
+        NumberAnimation { duration: movementTimer.interval }
     }
 }
