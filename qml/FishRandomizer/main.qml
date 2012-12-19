@@ -7,9 +7,10 @@ Item {
     Image {
       id: backgroundImage
       anchors.centerIn: parent
-      fillMode: Image.PreserveAspectFit
       width: aquarium.width
       height: aquarium.height
+      fillMode: Image.PreserveAspectFit
+      smooth: true
       source: "background.svg"
       scale: 1
     }
