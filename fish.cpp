@@ -7,10 +7,8 @@
 
 #include "fish.h"
 
-Fish::Fish(QPoint beginLimit, QPoint endLimit, QObject* parent)
+Fish::Fish(QObject* parent)
   : QObject(parent),
-    beginLimit_(beginLimit),
-    endLimit_(endLimit),
     isAlive_(true)
 {
   boost::posix_time::ptime myEpoch(boost::gregorian::date(1970,1,1));
@@ -19,12 +17,13 @@ Fish::Fish(QPoint beginLimit, QPoint endLimit, QObject* parent)
   boost::posix_time::time_duration myTimeFromEpoch = microTime - myEpoch;
   boost::int64_t microseconds = myTimeFromEpoch.ticks();
   rng_.seed(static_cast<boost::int64_t>(microseconds));
+  qDebug() << QString("Fish created!");
 }
 
 QPoint Fish::getNewDestination() const
 {
-  int x = getRandomNumber(beginLimit_.x(),endLimit_.x());
-  int y = getRandomNumber(beginLimit_.y(),endLimit_.y());
+  int x = getRandomNumber(startLimit_.x(),endLimit_.x());
+  int y = getRandomNumber(startLimit_.y(),endLimit_.y());
   qDebug() << QString("New destination randomized: " + QString::number(x) + "," + QString::number(y));
   return QPoint(x,y);
 }
@@ -37,6 +36,36 @@ bool Fish::isAlive() const
 void Fish::die()
 {
   isAlive_ = false;
+}
+
+QPoint Fish::getStartLimit() const
+{
+  return startLimit_;
+}
+
+void Fish::setStartLimit(QPoint startLimit)
+{
+  startLimit_ = startLimit;
+}
+
+QPoint Fish::getEndLimit() const
+{
+  return endLimit_;
+}
+
+void Fish::setEndLimit(QPoint endLimit)
+{
+  endLimit_ = endLimit;
+}
+
+int Fish::getIdentifier() const
+{
+  return identifier_;
+}
+
+void Fish::setIdentifier(int identifier)
+{
+  identifier_ = identifier;
 }
 
 int Fish::getRandomNumber(int begin, int end) const

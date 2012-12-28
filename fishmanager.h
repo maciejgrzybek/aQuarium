@@ -12,7 +12,6 @@ public:
   explicit FishManager(QObject* parent = 0);
 
 public slots:
-  QPoint getNewDestination(unsigned int fishId) const;
   unsigned int registerFish(int width, int height);
   void fishClicked(double x, double y);
   void chooseWinningFish();
@@ -20,7 +19,7 @@ public slots:
 private:
   unsigned int getNextNumber() const;
 
-  QMap<unsigned int,class Fish*> fishes;
+  QList<unsigned int> fishes;
 };
 
 #endif // FISHMANAGER_H

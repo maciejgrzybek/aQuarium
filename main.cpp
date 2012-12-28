@@ -1,7 +1,11 @@
 #include <QtGui/QGuiApplication>
 #include "qtquick2applicationviewer.h"
-#include "fishmanager.h"
 #include <QQmlContext>
+
+#include <QtQml>
+
+#include "fishmanager.h"
+#include "fish.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +16,7 @@ int main(int argc, char *argv[])
     viewer.setMainQmlFile(QStringLiteral("qml/FishRandomizer/main.qml"));
     viewer.showExpanded();
     viewer.rootContext()->setContextProperty("fishManager",fishManager);
+    qmlRegisterType<Fish>("Fishes",1,0,"FishObj");
 
     return app.exec();
 }
