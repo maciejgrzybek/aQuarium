@@ -6,7 +6,6 @@ Item {
     height: 100
     property int identifier: 0
     property int interval: 5000
-    property bool fishPut: false
     AnimatedImage {
         id: fishImage
         source: "animated-fish.gif"
@@ -39,12 +38,24 @@ Item {
                 fishImage.mirror = true
             else
                 fishImage.mirror = false
-            fishPut = true
+            fish.state = 'swimming'
             x = point.x
             y = point.y
             console.log("Fish received new coordinates: x=" + point.x +" y=" + point.y)
         }
     }
+
+    states: [
+        State {
+            name: "putting"
+            PropertyChanges { target: fish; x: parent.width/2; y: parent.height/2 + fish.height }
+        },
+        State {
+            name: "swimming"
+            PropertyChanges { target: fish }
+        }
+
+    ]
 
     Behavior on x {
         NumberAnimation {
@@ -54,8 +65,21 @@ Item {
 
     Behavior on y {
         NumberAnimation {
-            easing.type: (fishPut ? Easing.Linear : Easing.OutCubic)
+            //easing.type: Easing.Linear
             duration: movementTimer.interval
         }
     }
+
+    transitions: [
+        // When putting fish into aquarium, use OutCubic animation over y
+        Transition {
+            to: "putting"
+            NumberAnimation {
+                properties: "y"
+                easing.type: Easing.OutCubic
+                duration: movementTimer.interval
+            }
+        }
+    ]
+
 }

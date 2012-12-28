@@ -7,6 +7,6 @@ function createFish() {
     console.log("Error creating fish object");
     return;
   }
-  sprite.y = aquarium.height/2+sprite.height
+  sprite.state = 'putting';
   console.log("Succesfully created fish.");
 }
