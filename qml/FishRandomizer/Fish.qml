@@ -1,9 +1,19 @@
 import QtQuick 2.0
+import Fishes 1.0
 
 Item {
     id: fish
     width: 150
     height: 100
+    FishObj
+    {
+        id: internal
+        startLimit.x: 0
+        startLimit.y: 0
+        endLimit.x: aquarium.width
+        endLimit.y: aquarium.height
+
+    }
     property int identifier: 0
     property int interval: 5000
     AnimatedImage {
@@ -33,7 +43,7 @@ Item {
         running: true
 
         onTriggered: {
-            var point = fishManager.getNewDestination(fish.identifier);
+            var point = internal.getNewDestination();
             if (point.x > x)
                 fishImage.mirror = true
             else
@@ -54,7 +64,6 @@ Item {
             name: "swimming"
             PropertyChanges { target: fish }
         }
-
     ]
 
     Behavior on x {
@@ -65,7 +74,6 @@ Item {
 
     Behavior on y {
         NumberAnimation {
-            //easing.type: Easing.Linear
             duration: movementTimer.interval
         }
     }
@@ -80,6 +88,6 @@ Item {
                 duration: movementTimer.interval
             }
         }
-    ]
 
+    ]
 }
