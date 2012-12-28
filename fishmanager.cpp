@@ -1,13 +1,9 @@
-#include <ctime>
-
-#include <boost/date_time/posix_time/posix_time_types.hpp>
-#include <boost/cstdint.hpp>
-
 #include <QDebug>
 #include <QTimer>
 #include <QList>
 #include <QtAlgorithms>
 
+#include "fish.h"
 #include "fishmanager.h"
 
 FishManager::FishManager(QObject* parent) :
@@ -32,17 +28,12 @@ void FishManager::fishClicked(double x, double y)
   qDebug() << QString("fishClicked(" + QString::number(x) + "," + QString::number(y) + ") invoked");
 }
 
-Fish::Fish(QPoint beginLimit, QPoint endLimit, QObject* parent)
-  : QObject(parent),
-    beginLimit_(beginLimit),
-    endLimit_(endLimit)
+void FishManager::chooseWinningFish()
 {
-  boost::posix_time::ptime myEpoch(boost::gregorian::date(1970,1,1));
-  boost::posix_time::ptime microTime
-      = boost::posix_time::microsec_clock::local_time();
-  boost::posix_time::time_duration myTimeFromEpoch = microTime - myEpoch;
-  boost::int64_t microseconds = myTimeFromEpoch.ticks();
-  rng_.seed(static_cast<boost::int64_t>(microseconds));
+  // FIXME implement this
+  // randomly choose one fish and mark others as dead.
+  // dead fish will drown and one left (alive) will jump over the water
+  // "alivness" handling by proper values returned by getNewDestination()
 }
 
 unsigned int FishManager::getNextNumber() const
@@ -65,20 +56,4 @@ QPoint FishManager::getNewDestination(unsigned int fishId) const
     return QPoint(0,0);
 
   return fish->getNewDestination();
-}
-
-QPoint Fish::getNewDestination() const
-{
-  int x = getRandomNumber(beginLimit_.x(),endLimit_.x());
-  int y = getRandomNumber(beginLimit_.y(),endLimit_.y());
-  qDebug() << QString("New destination randomized: " + QString::number(x) + "," + QString::number(y));
-  return QPoint(x,y);
-}
-
-int Fish::getRandomNumber(int begin, int end) const
-{
-  if (begin < 0)
-    begin = 0;
-  boost::random::uniform_int_distribution<> random_distribution(begin,end);
-  return random_distribution(rng_);
 }
