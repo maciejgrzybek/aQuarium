@@ -1,22 +1,22 @@
 #include <QDebug>
-#include <QTimer>
+#include <QSet>
 #include <QList>
 #include <QtAlgorithms>
 
 #include "fish.h"
 #include "fishmanager.h"
 
-FishManager::FishManager(QObject* parent) :
-  QObject(parent)
+FishManager::FishManager(QObject* parent)
+  : QObject(parent)
 {
 }
 
-unsigned int FishManager::registerFish(int width, int height)
+unsigned int FishManager::registerFish()
 {
-  qDebug() << QString("registerFish(" + QString::number(width) + "," + QString::number(height) + ") invoked");
+  qDebug() << QString("registerFish() invoked");
 
   unsigned int num = getNextNumber();
-  fishes.append(num);
+  fishes.insert(num);
   qDebug() << QString("registered fish with id = " + QString::number(num));
   return num;
 }
@@ -29,13 +29,19 @@ void FishManager::chooseWinningFish()
   // "alivness" handling by proper values returned by getNewDestination()
 }
 
+void FishManager::killOneFish()
+{
+  // FIXME implement this
+  // choose (randomly) one fish and send signal to kill it
+}
+
 unsigned int FishManager::getNextNumber() const
 {
   if (fishes.isEmpty())
     return 1;
-  QList<unsigned int> keys = fishes;
-  qSort(keys);
-  QList<unsigned int>::const_iterator last = keys.constEnd();
+  QList<unsigned int> numbers = fishes.values();
+  qSort(numbers);
+  QList<unsigned int>::const_iterator last = numbers.constEnd();
   --last; // valid, because we checked for empty list at the beginning
   unsigned int lastItem = *last;
   return lastItem + 1;

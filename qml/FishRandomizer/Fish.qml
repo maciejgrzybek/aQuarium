@@ -28,7 +28,7 @@ Item {
         scale: 1
 
         Component.onCompleted: {
-            identifier = fishManager.registerFish(aquarium.width*scale-fish.width,aquarium.height*scale-fish.height);
+            identifier = fishManager.registerFish();
             internal.identifier = identifier
             console.log("Fish completed. Id = " + identifier)
         }

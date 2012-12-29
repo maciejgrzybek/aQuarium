@@ -2,8 +2,7 @@
 #define FISHMANAGER_H
 
 #include <QObject>
-#include <QPoint>
-#include <QMap>
+#include <QSet>
 
 class FishManager : public QObject
 {
@@ -12,13 +11,17 @@ public:
   explicit FishManager(QObject* parent = 0);
 
 public slots:
-  unsigned int registerFish(int width, int height);
+  unsigned int registerFish();
   void chooseWinningFish();
 
+signals:
+  void die(int fishId);
+
 private:
+  void killOneFish();
   unsigned int getNextNumber() const;
 
-  QList<unsigned int> fishes;
+  QSet<unsigned int> fishes;
 };
 
 #endif // FISHMANAGER_H
