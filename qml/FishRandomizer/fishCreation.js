@@ -9,4 +9,5 @@ function createFish() {
   }
   fishObj.state = 'putting';
   console.log("Succesfully created fish.");
+  return fishObj;
 }

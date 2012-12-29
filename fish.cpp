@@ -17,6 +17,7 @@ Fish::Fish(QObject* parent)
   boost::posix_time::time_duration myTimeFromEpoch = microTime - myEpoch;
   boost::int64_t microseconds = myTimeFromEpoch.ticks();
   rng_.seed(static_cast<boost::int64_t>(microseconds));
+
   qDebug() << QString("Fish created!");
 }
 
@@ -66,6 +67,7 @@ int Fish::getIdentifier() const
 void Fish::setIdentifier(int identifier)
 {
   identifier_ = identifier;
+  qDebug() << QString("Set new identifier = " + QString::number(identifier));
 }
 
 QString Fish::getName() const

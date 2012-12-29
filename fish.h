@@ -17,7 +17,6 @@ class Fish : public QObject
   Q_PROPERTY(QString name READ getName WRITE setName)
 public:
   explicit Fish(QObject* parent = 0);
-  //QPoint getNewDestination() const;
 
   bool isAlive() const;
   void die();

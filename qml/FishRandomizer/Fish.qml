@@ -5,6 +5,10 @@ Item {
     id: fish
     width: 150
     height: 100
+    onFocusChanged: nameBox.forceActiveFocus()
+    property int identifier: 0
+    property int interval: 5000
+
     FishObj
     {
         id: internal
@@ -13,8 +17,6 @@ Item {
         endLimit.x: aquarium.width
         endLimit.y: aquarium.height
     }
-    property int identifier: 0
-    property int interval: 5000
 
     AnimatedImage {
         id: fishImage
@@ -27,7 +29,7 @@ Item {
 
         Component.onCompleted: {
             identifier = fishManager.registerFish(aquarium.width*scale-fish.width,aquarium.height*scale-fish.height);
-            //movementTimer.triggeredOnStart = true
+            internal.identifier = identifier
             console.log("Fish completed. Id = " + identifier)
         }
     }
@@ -77,10 +79,10 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         anchors.topMargin: 5
+        onFocusChanged: nameEdit.forceActiveFocus()
 
         TextEdit {
             id: nameEdit
-            focus: parent.focus
             height: parent.height
             width: parent.width
             verticalAlignment: Text.AlignVCenter
