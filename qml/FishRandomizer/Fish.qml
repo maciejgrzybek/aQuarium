@@ -37,7 +37,14 @@ Item {
         anchors.fill: parent
         onClicked: {
             console.log("Fish clicked")
-            // grow up TextEdit (nameBox)
+            if (nameBox.state == "grown")
+            {
+                nameBox.focus = false
+            }
+            else
+            {
+                nameBox.focus = true
+            }
         }
     }
 
@@ -64,14 +71,16 @@ Item {
     {
         id: nameBox
         color: "red"
+        focus: parent.focus
         width: nameEdit.paintedWidth
         height: nameEdit.paintedHeight
-        //anchors.centerIn: parent
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         anchors.topMargin: 5
+
         TextEdit {
             id: nameEdit
+            focus: parent.focus
             height: parent.height
             width: parent.width
             verticalAlignment: Text.AlignVCenter
@@ -82,6 +91,26 @@ Item {
             smooth: true
             cursorVisible: false
         }
+
+        Behavior on scale {
+            SmoothedAnimation {
+                duration: 300
+                velocity: 1.0
+            }
+        }
+
+        states: [
+            State {
+                name: "normal"
+                when: !nameEdit.activeFocus
+                PropertyChanges { target: nameBox; scale: 1.0 }
+            },
+            State {
+                name: "grown"
+                when: nameEdit.activeFocus
+                PropertyChanges { target: nameBox; scale: 7.0 }
+            }
+        ]
     }
 
     states: [
