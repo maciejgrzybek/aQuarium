@@ -21,12 +21,6 @@ unsigned int FishManager::registerFish(int width, int height)
   return num;
 }
 
-void FishManager::fishClicked(double x, double y)
-{
-  // TODO implement this if needed
-  qDebug() << QString("fishClicked(" + QString::number(x) + "," + QString::number(y) + ") invoked");
-}
-
 void FishManager::chooseWinningFish()
 {
   // FIXME implement this

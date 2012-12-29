@@ -68,6 +68,16 @@ void Fish::setIdentifier(int identifier)
   identifier_ = identifier;
 }
 
+QString Fish::getName() const
+{
+  return name_;
+}
+
+void Fish::setName(const QString& name)
+{
+  name_ = name;
+}
+
 int Fish::getRandomNumber(int begin, int end) const
 {
   if (begin < 0)

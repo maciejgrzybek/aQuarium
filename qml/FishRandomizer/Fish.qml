@@ -12,10 +12,10 @@ Item {
         startLimit.y: 0
         endLimit.x: aquarium.width
         endLimit.y: aquarium.height
-
     }
     property int identifier: 0
     property int interval: 5000
+
     AnimatedImage {
         id: fishImage
         source: "animated-fish.gif"
@@ -24,15 +24,20 @@ Item {
         height: fish.height
         mirror: false
         scale: 1
-        MouseArea {
-            acceptedButtons: Qt.RightButton
-            onClicked: fishManager.fishClicked(mouseX,mouseY)
-        }
 
         Component.onCompleted: {
             identifier = fishManager.registerFish(aquarium.width*scale-fish.width,aquarium.height*scale-fish.height);
             //movementTimer.triggeredOnStart = true
             console.log("Fish completed. Id = " + identifier)
+        }
+    }
+
+    MouseArea {
+        acceptedButtons: Qt.LeftButton
+        anchors.fill: parent
+        onClicked: {
+            console.log("Fish clicked")
+            // grow up TextEdit (nameBox)
         }
     }
 
@@ -52,6 +57,30 @@ Item {
             x = point.x
             y = point.y
             console.log("Fish received new coordinates: x=" + point.x +" y=" + point.y)
+        }
+    }
+
+    Rectangle
+    {
+        id: nameBox
+        color: "red"
+        width: nameEdit.paintedWidth
+        height: nameEdit.paintedHeight
+        //anchors.centerIn: parent
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.bottom
+        anchors.topMargin: 5
+        TextEdit {
+            id: nameEdit
+            height: parent.height
+            width: parent.width
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            anchors.centerIn: parent
+            persistentSelection: false
+            text: internal.name
+            smooth: true
+            cursorVisible: false
         }
     }
 

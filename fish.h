@@ -14,6 +14,7 @@ class Fish : public QObject
   Q_PROPERTY(int identifier READ getIdentifier WRITE setIdentifier)
   Q_PROPERTY(QPoint startLimit READ getStartLimit WRITE setStartLimit)
   Q_PROPERTY(QPoint endLimit READ getEndLimit WRITE setEndLimit)
+  Q_PROPERTY(QString name READ getName WRITE setName)
 public:
   explicit Fish(QObject* parent = 0);
   //QPoint getNewDestination() const;
@@ -29,6 +30,9 @@ public:
   int getIdentifier() const;
   void setIdentifier(int);
 
+  QString getName() const;
+  void setName(const QString&);
+
 public slots:
   QPoint getNewDestination() const;
 
@@ -36,12 +40,12 @@ private:
   int getRandomNumber(int begin, int end) const;
 
   mutable boost::random::mt19937 rng_;
+
   QPoint startLimit_;
   QPoint endLimit_;
   bool isAlive_;
   int identifier_;
-  int lastX_;
-  int currentX_;
+  QString name_;
 };
 
 

@@ -13,7 +13,6 @@ public:
 
 public slots:
   unsigned int registerFish(int width, int height);
-  void fishClicked(double x, double y);
   void chooseWinningFish();
 
 private:
