@@ -10,10 +10,10 @@
 class Fish : public QObject
 {
   Q_OBJECT
-  Q_PROPERTY(bool live READ isAlive)
-  Q_PROPERTY(int identifier READ getIdentifier WRITE setIdentifier)
-  Q_PROPERTY(QPoint startLimit READ getStartLimit WRITE setStartLimit)
-  Q_PROPERTY(QPoint endLimit READ getEndLimit WRITE setEndLimit)
+  Q_PROPERTY(bool live READ isAlive NOTIFY aliveStateChanged)
+  Q_PROPERTY(int identifier READ getIdentifier WRITE setIdentifier NOTIFY identifierChanged)
+  Q_PROPERTY(QPoint startLimit READ getStartLimit WRITE setStartLimit NOTIFY limitChanged)
+  Q_PROPERTY(QPoint endLimit READ getEndLimit WRITE setEndLimit NOTIFY limitChanged)
   Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
 public:
   explicit Fish(QObject* parent = 0);
@@ -36,7 +36,10 @@ public slots:
   QPoint getNewDestination() const;
 
 signals:
+  void aliveStateChanged();
+  void identifierChanged();
   void nameChanged();
+  void limitChanged();
 
 private:
   int getRandomNumber(int begin, int end) const;

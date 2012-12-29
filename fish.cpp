@@ -37,6 +37,7 @@ bool Fish::isAlive() const
 void Fish::die()
 {
   isAlive_ = false;
+  emit aliveStateChanged();
 }
 
 QPoint Fish::getStartLimit() const
@@ -47,6 +48,7 @@ QPoint Fish::getStartLimit() const
 void Fish::setStartLimit(QPoint startLimit)
 {
   startLimit_ = startLimit;
+  emit limitChanged();
 }
 
 QPoint Fish::getEndLimit() const
@@ -57,6 +59,7 @@ QPoint Fish::getEndLimit() const
 void Fish::setEndLimit(QPoint endLimit)
 {
   endLimit_ = endLimit;
+  emit limitChanged();
 }
 
 int Fish::getIdentifier() const
@@ -67,6 +70,7 @@ int Fish::getIdentifier() const
 void Fish::setIdentifier(int identifier)
 {
   identifier_ = identifier;
+  emit identifierChanged();
   qDebug() << QString("Set new identifier = " + QString::number(identifier));
 }
 
