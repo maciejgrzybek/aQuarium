@@ -1,8 +1,11 @@
 #ifndef FISHMANAGER_H
 #define FISHMANAGER_H
 
+#include <boost/random/mersenne_twister.hpp>
+#include <boost/random/uniform_int_distribution.hpp>
+
 #include <QObject>
-#include <QSet>
+#include <QMap>
 
 class FishManager : public QObject
 {
@@ -11,17 +14,17 @@ public:
   explicit FishManager(QObject* parent = 0);
 
 public slots:
-  unsigned int registerFish();
+  unsigned int registerFish(QObject*);
   void chooseWinningFish();
 
-signals:
-  void die(int fishId);
-
 private:
-  void killOneFish();
-  unsigned int getNextNumber() const;
+  int killOneFish();
+  QMap<unsigned int,class Fish*> getAliveFishes() const;
+  unsigned int getNextNumber(class Fish*);
 
-  QSet<unsigned int> fishes;
+  mutable boost::random::mt19937 rng_;
+
+  QMap<unsigned int,class Fish*> fishes;
 };
 
 #endif // FISHMANAGER_H

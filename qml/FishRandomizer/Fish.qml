@@ -6,6 +6,7 @@ Item {
     width: 150
     height: 100
     onFocusChanged: nameBox.forceActiveFocus()
+
     property int identifier: 0
     property int interval: 5000
 
@@ -28,7 +29,7 @@ Item {
         scale: 1
 
         Component.onCompleted: {
-            identifier = fishManager.registerFish();
+            identifier = fishManager.registerFish(internal);
             internal.identifier = identifier
             console.log("Fish completed. Id = " + identifier)
         }
@@ -54,7 +55,7 @@ Item {
         id: movementTimer
         interval: fish.interval
         repeat: true
-        running: true
+        running: internal.live
 
         onTriggered: {
             var point = internal.getNewDestination();
