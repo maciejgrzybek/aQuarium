@@ -73,7 +73,6 @@ Item {
     {
         id: nameBox
         color: "red"
-        focus: parent.focus
         width: nameEdit.paintedWidth
         height: nameEdit.paintedHeight
         anchors.horizontalCenter: parent.horizontalCenter

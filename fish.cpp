@@ -78,6 +78,7 @@ QString Fish::getName() const
 void Fish::setName(const QString& name)
 {
   name_ = name;
+  emit nameChanged();
 }
 
 int Fish::getRandomNumber(int begin, int end) const
