@@ -1,5 +1,6 @@
 import QtQuick 2.0
 
+import "addons"
 import "fishCreation.js" as FishCreator
 
 Item {
@@ -21,7 +22,7 @@ Item {
       onClicked: {
           if (mouse.button == Qt.LeftButton)
           {
-            fishManager.chooseWinningFish()
+            //fishManager.chooseWinningFish()
             aquarium.focus = true
           }
           else if (mouse.button == Qt.RightButton)
@@ -30,5 +31,18 @@ Item {
             fish.focus = true
           }
       }
+    }
+
+    Toolbar
+    {
+        id: toolBar
+        width: 40; anchors.left: parent.right; height: parent.height; opacity: 0.9
+        onCreateButtonClicked: {
+            var fish = FishCreator.createFish()
+            fish.focus = true
+        }
+        onRandomButtonClicked: {
+            fishManager.chooseWinningFish()
+        }
     }
 }
