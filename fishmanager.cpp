@@ -23,14 +23,13 @@ unsigned int FishManager::registerFish(QObject* internal)
 
 void FishManager::chooseWinningFish()
 {
-  // FIXME implement this
-  // randomly choose one fish and mark others as dead.
-  // dead fish will drown and one left (alive) will jump over the water
-  // "alivness" handling by proper values returned by getNewDestination()
   qDebug() << QString("FishManager::chooseWinningFish() invoked");
 
-  /*while (killOneFish() > 1)
-  ;*/
+  if (getAliveFishes().count() > 1)
+  {
+    while (killOneFish() > 1)
+    ;
+  }
 }
 
 int FishManager::killOneFish()
@@ -58,7 +57,7 @@ QMap<unsigned int,Fish*> FishManager::getAliveFishes() const
   {
     iter.next();
 
-    if (!iter.value()->isAlive()) // already dead
+    if (iter.value()->isDying() || !iter.value()->isAlive()) // omit dying or already dead fishes
       continue;
 
     result.insert(iter.key(),iter.value());

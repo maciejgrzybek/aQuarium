@@ -5,12 +5,14 @@
 #include <boost/random/uniform_int_distribution.hpp>
 
 #include <QObject>
+#include <QList>
 #include <QPoint>
 
 class Fish : public QObject
 {
   Q_OBJECT
   Q_PROPERTY(bool live READ isAlive NOTIFY aliveStateChanged)
+  Q_PROPERTY(bool dying READ isDying NOTIFY dyingStateChanged)
   Q_PROPERTY(int identifier READ getIdentifier WRITE setIdentifier NOTIFY identifierChanged)
   Q_PROPERTY(QPoint startLimit READ getStartLimit WRITE setStartLimit NOTIFY limitChanged)
   Q_PROPERTY(QPoint endLimit READ getEndLimit WRITE setEndLimit NOTIFY limitChanged)
@@ -19,7 +21,8 @@ public:
   explicit Fish(QObject* parent = 0);
 
   bool isAlive() const;
-  void die();
+  bool isDying() const;
+  void die(unsigned int steps = 3);
 
   QPoint getStartLimit() const;
   void setStartLimit(QPoint);
@@ -33,24 +36,28 @@ public:
   void setName(const QString&);
 
 public slots:
-  QPoint getNewDestination() const;
+  QPoint getNewDestination();
 
 signals:
   void aliveStateChanged();
+  void dyingStateChanged();
   void identifierChanged();
   void nameChanged();
   void limitChanged();
 
 private:
   int getRandomNumber(int begin, int end) const;
+  QPoint chooseNextDrowingDestination() const;
 
   mutable boost::random::mt19937 rng_;
 
+  int dieStepsLeft_;
   QPoint startLimit_;
   QPoint endLimit_;
   bool isAlive_;
   int identifier_;
   QString name_;
+  QList<QPoint> lastMoves_;
 };
 
 
