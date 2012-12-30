@@ -4,7 +4,6 @@ import "fishCreation.js" as FishCreator
 
 Item {
     id: aquarium
-    property bool startRandom: false
     Image {
       id: backgroundImage
       anchors.centerIn: parent
@@ -22,7 +21,7 @@ Item {
       onClicked: {
           if (mouse.button == Qt.LeftButton)
           {
-            startRandom = true
+            fishManager.chooseWinningFish()
             aquarium.focus = true
           }
           else if (mouse.button == Qt.RightButton)
@@ -31,14 +30,5 @@ Item {
             fish.focus = true
           }
       }
-    }
-
-    Timer {
-        id: winnerChoosingTimer
-        running: startRandom
-        repeat: false
-        interval: 10000
-
-        onTriggered: fishManager.chooseWinningFish()
     }
 }

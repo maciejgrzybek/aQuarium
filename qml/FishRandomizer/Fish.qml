@@ -66,14 +66,14 @@ Item {
             fish.state = 'swimming'
             x = point.x
             y = point.y
-            console.log("Fish received new coordinates: x=" + point.x +" y=" + point.y)
+            console.log("Fish " + identifier + " received new coordinates: x=" + point.x +" y=" + point.y)
         }
     }
 
     Rectangle
     {
         id: nameBox
-        color: "red"
+        color: (internal.dying ? "grey" : "red")
         width: nameEdit.paintedWidth
         height: nameEdit.paintedHeight
         anchors.horizontalCenter: parent.horizontalCenter
