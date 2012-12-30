@@ -1,7 +1,8 @@
 #include <QDebug>
-#include <QMap>
 #include <QList>
+#include <QMap>
 #include <QtAlgorithms>
+#include <QTimer>
 
 #include "fish.h"
 #include "fishmanager.h"
@@ -25,17 +26,19 @@ void FishManager::chooseWinningFish()
 {
   qDebug() << QString("FishManager::chooseWinningFish() invoked");
 
-  if (getAliveFishes().count() > 1)
-  {
-    while (killOneFish() > 1)
-    ;
-  }
+  connect(&winningFishTimer_,SIGNAL(timeout()),this,SLOT(killOneFish()));
+  winningFishTimer_.start(1000);
 }
 
 int FishManager::killOneFish()
 {
   QMap<unsigned int,Fish*> aliveFishes = getAliveFishes();
   int aliveFishesCount = aliveFishes.count();
+  if (aliveFishesCount <= 1)
+  {
+    winningFishTimer_.stop();
+    return aliveFishesCount;
+  }
 
   qDebug() << QString("Alive fishes before killing: " + QString::number(aliveFishesCount));
 
