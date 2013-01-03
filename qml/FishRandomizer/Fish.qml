@@ -15,8 +15,8 @@ Item {
         id: internal
         startLimit.x: 0
         startLimit.y: 0
-        endLimit.x: aquarium.width
-        endLimit.y: aquarium.height
+        endLimit.x: aquarium.width-fish.width
+        endLimit.y: aquarium.height-fish.height
     }
 
     AnimatedImage {
@@ -73,22 +73,20 @@ Item {
     Rectangle
     {
         id: nameBox
-        color: (internal.dying ? "grey" : "red")
-        width: nameEdit.paintedWidth
-        height: nameEdit.paintedHeight
+        property alias text: nameEdit.text
+        color: (internal.dying ? "gray" : "red")
+        width: nameEdit.width+10 // 10px for margin
+        height: nameEdit.height
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.bottom
         anchors.topMargin: 5
         onFocusChanged: nameEdit.forceActiveFocus()
+        radius: 2
 
-        TextEdit {
+        TextInput {
             id: nameEdit
-            height: parent.height
-            width: parent.width
-            verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             anchors.centerIn: parent
-            persistentSelection: false
             text: internal.name
             smooth: true
             cursorVisible: false

@@ -7,13 +7,14 @@ Item {
     id: aquarium
     Image {
       id: backgroundImage
-      anchors.centerIn: parent
+      //anchors.centerIn: parent
       width: aquarium.width
-      height: aquarium.height
+      height: aquarium.height-60
       fillMode: Image.PreserveAspectFit
       smooth: true
-      source: "background.svg"
+      source: "images/aquarium.jpg"//"background.svg"
       scale: 1
+      anchors.bottom: parent.bottom
     }
 
     MouseArea {
